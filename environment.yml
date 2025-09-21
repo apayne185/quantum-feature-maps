@@ -1,0 +1,24 @@
+name: qfm-env
+channels: 
+  - defaults
+dependencies: 
+  - python=3.10
+  - pip
+  - numpy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - jupyterlab
+  - notebook
+  - pip:
+    - qiskit
+    - qiskit-aer
+    - qiskit-machine-learning
+    - pennylane 
+    - pennylane-qiskit
+    - torch
+    - torchvision
+
+ 
+
