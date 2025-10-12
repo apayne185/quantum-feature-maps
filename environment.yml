@@ -12,14 +12,18 @@ dependencies:
   - jupyterlab
   - notebook
   - pip:
-    - qiskit
-    - qiskit-aer
+    - qiskit==0.41.0  
     - qiskit-machine-learning
+    - qiskit-ibm-runtime
     - pennylane 
     - pennylane-qiskit
+    - pennylane-lightning
     - torch
     - torchvision
     - pylatexenc
+    - python-dotenv
+ 
+
 
  
 
