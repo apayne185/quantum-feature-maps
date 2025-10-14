@@ -22,6 +22,7 @@ dependencies:
     - torchvision
     - pylatexenc
     - python-dotenv
+    - joblib
  
 
 
