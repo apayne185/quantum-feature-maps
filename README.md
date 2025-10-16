@@ -118,7 +118,7 @@ quantum-feature-maps/
 
 ---
 
-### `analysis.ipynb`
+### `final_analysis.ipynb`
 **Purpose:** Aggregate and analyze all results.  
 **Main steps:**
 - Load metrics from both classical and quantum experiments.
