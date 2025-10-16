@@ -11,6 +11,9 @@ dependencies:
   - seaborn
   - jupyterlab
   - notebook
+  - requests
+  - urllib3
+  - certifi 
   - pip:
     - qiskit==0.41.0  
     - qiskit-machine-learning

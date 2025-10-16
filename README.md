@@ -15,6 +15,15 @@
 
 ## Project Overview
 
+Quantum feaure maps (QFMs) are hybrid ML frameowrks that explore how quantum circuits can enhance classical preprocessing pipelines, specifically in this case for computer vision datasets such as MNIST. This project investigates the use of QFMs as nonlinear transformations that embed classical data into high dimensional Hilbert space, allowing for the classical models Logistic Regression and SVM to potentially capture more meaningful relationships as compared to standard, classical embeddings. 
+
+QFM integrates classical dimensionality reduction with parameterized quantum circuits (PCQs) implemented in PennyLane (and tested in Qiskit), benchmarking their performance against classical baselines. The goal is to understand: 
+
+* How the choice of quantum feature maps, ansatz, and backend impacts performance. 
+* When/if quantum enhanced preprocessing can outperform classical methods when in small-scale classification tasks. 
+
+This repo provides reproducible experiments for classical and hybrid quantum-classical models, along with visualizations, parameter sweeps, and IBM quantum integration. 
+
 
 ## Configure Environment
 
@@ -29,8 +38,8 @@ conda activate qfm-env
 ## Repository Organization
 ```
 quantum-feature-maps/
-├── environment.yml # Conda env configuration for qfm-env
-├── README.md # This file
+├── environment.yml      # Conda env configuration for qfm-env
+├── README.md            # This file
 ├── notebooks/ 
 │ ├── data/ 
 │ | ├── MNIST            # Local version of MNIST dataset
@@ -40,8 +49,8 @@ quantum-feature-maps/
 │ ├── classical_baseline.ipynb   # Classical ML baselines 
 │ ├── quantum_pipeline.ipynb     # Full quantum feature map + variational circuit pipeline
 │ ├── quantum_feature_map_tests.ipynb   # Tests for PennyLane/Qiskit Feature Maps
-│ ├── 05_analysis.ipynb # Post training metrics, plots, performance summary
-├── results/            # CSVs, plots
+│ ├── analysis.ipynb # Post training metrics, plots, performance summary
+├── results/            # CSVs, plots, models
 │ ├── metrics/          # Accuracy, loss, and runtime data
 │ └── figures/          # Visual outputs and comparisons
 ├── .gitignore 
@@ -61,6 +70,7 @@ quantum-feature-maps/
 
 **Output:**  
 `data/mnist01_pca4.npz` (used by later notebooks)
+
 ---
 
 ### `classical_baseline.ipynb`
@@ -106,6 +116,7 @@ quantum-feature-maps/
 - Test **ZZFeatureMap** and **Raw Feature Vector** for encoding classical data into quantum states.
 - Visualize each methods transformations, circuits. 
 
+---
 
 ### `analysis.ipynb`
 **Purpose:** Aggregate and analyze all results.  
@@ -125,5 +136,80 @@ quantum-feature-maps/
 
 
 
-## Key Concepts  
+## Key Features 
+
+### Hybrid Classical Quantum Pipeline
+
+* Combines PCA based feature reduction with quantum embeddings using a PennyLane ZZ feature map. 
+* Integrates a variational ansatz to act as a learnable quantum transformation for enhancd feature expressivity. 
+
+### Configurable Experiment Parameters
+
+* Varied number of qubits, circuit depth, number of measurement shots, device backend (simulator vs IBM backend), and noise models. 
+
+### Classical Baseline Comparison
+
+* Uses Logistic Regression and SVMs trained on the same PCA reduced data. 
+* Enables easy accuracy and runtime comparison between classical and quantum-enhanced models. 
+
+### Quantum Circuit Visualization 
+
+* Visualized feature maps and ansatz circuits for inspection using PennyLane and Qiskit.
+
+### IBM Quantum Integration
+
+* Access to real IBM Quantum devices via the IBMQ provider, using the least_busy() backend selection for optimal queue management. 
+
+### Logging Results and Analysis
+
+* Automatic metric tracking (accuracy, runtime, number of parameters).
+* Generates CSV logs and summary visualizations for classical/quantum experiments. 
+
+
+---
+
+## Key Concepts
+
+### Quantum Feature Maps
+
+Transform classical data into quantum states through unitary operations, which allows models to implicitly compute inner products in a high-dim Hilbert space (similar to kernel methods but with potentially richer representational capacity). 
+
+The maps used in the quantum_feature_maps_tests.ipynb notebook are: 
+* Basis Encoding
+* Angle Encoding (encodes data into rotation angles) 
+  * ZZ feature map (applies entangling gates to capture data correlations)
+* Amplitude Encoding (uses vector amplitudes of quantum states)
+
+
+### Variational Ansatz 
+
+Parameterized quantum circuit designed to learn transformations that best seperate classes. These parameters are optimzied classicaly, which bridges the gap between classical optimization and quantum hardware.
+
+### Hybrid Training Workflow
+* Preprocessing: Classical PCA
+* Encoding: Angle encoding QFM
+* Measurement: Expectation values produce quantum features
+* Classification: Trains classical models on quantum features
+
+
+### Quantum Hardware and Simulators
+This project supports both **local simulators** (default.qubit, aer_simulator) and **IBM Quantum devices** (qiskit.ibmq), allowing for the experiments to scale from local to realistic noisy devices. 
+
+---
+
+## Research Motivation
+
+While quantum computing is still in its early, noise limited stage, hybrid quantum classical learning is one of the more promising pathyways towards achieving a Quantum Advantage in ML.
+
+Classical NNs oftens struggle to represent highly entangled/non linear data relationships. Quantum circuits can encode this data into exponentially larger Hilbert spaces using relatively few qubits, allowing us to potentially reveal complex correlations that are classically impossible. 
+
+This project aims to explore QFMs as trainable preprocessing layers, bridging the gap between classical feature extraction (PCA) and quantum enhanced computation. Through systematic experiments, this repo investigates whether quantum encoded features can provide measurable imporvements in accuracy in small scale datasets. 
+
+---
+
+## Future Work
+* Integration with classical deep learning pipelines (hybrid QNN-CNN architectures).
+* Noise Resilient Training (evaluation of how noise impacts accuracy, stability, along with noise-adaptive ansatz designs). 
+* Trainable QFMs (instead of ZZ feature maps, variational quantum feature maps (VQFMs)). 
+
 
