@@ -49,9 +49,10 @@ quantum-feature-maps/
 │ ├── classical_baseline.ipynb   # Classical ML baselines 
 │ ├── quantum_pipeline.ipynb     # Full quantum feature map + variational circuit pipeline
 │ ├── quantum_feature_map_tests.ipynb   # Tests for PennyLane/Qiskit Feature Maps
-│ ├── analysis.ipynb # Post training metrics, plots, performance summary
+│ ├── final_analysis.ipynb # Post training metrics, plots, performance summary
 ├── results/            # CSVs, plots, models
 │ ├── metrics/          # Accuracy, loss, and runtime data
+| │ ├── final /         # Final summary from final_analysis.ipynb
 │ └── figures/          # Visual outputs and comparisons
 ├── .gitignore 
 └── .env                # Stores IBM Quantum API key
